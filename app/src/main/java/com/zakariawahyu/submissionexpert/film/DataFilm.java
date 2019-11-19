@@ -1,4 +1,6 @@
-package com.zakariawahyu.submissionexpert;
+package com.zakariawahyu.submissionexpert.film;
+
+import com.zakariawahyu.submissionexpert.R;
 
 import java.util.ArrayList;
 
@@ -62,7 +64,7 @@ public class DataFilm {
             R.drawable.poster_glass
     };
 
-    static ArrayList<ItemFilm> getList() {
+    public static ArrayList<ItemFilm> getList() {
         ArrayList<ItemFilm> listFilm = new ArrayList<>();
         for (int position = 0; position < judulFilm.length; position++){
             ItemFilm film = new ItemFilm();

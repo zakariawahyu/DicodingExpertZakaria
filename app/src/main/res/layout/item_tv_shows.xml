@@ -21,7 +21,7 @@
 
 
         <ImageView
-            android:id="@+id/tvitemPosterFilm"
+            android:id="@+id/tvitemPosterTvShows"
             android:layout_width="80dp"
             android:layout_height="130dp"
             android:layout_marginLeft="16dp"
@@ -37,7 +37,7 @@
 
 
             <TextView
-                android:id="@+id/tvitemJudulFilm"
+                android:id="@+id/tvitemJudulTvShows"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -48,7 +48,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tvitemTanggalFilm"
+                android:id="@+id/tvitemTanggalTvShows"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -57,7 +57,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tvitemDeskripsiFilm"
+                android:id="@+id/tvitemDeskripsiTvShows"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

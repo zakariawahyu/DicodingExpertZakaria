@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Submission Expert</string>
+    <string name="tvshows">TV Shows</string>
+    <string name="film">Film</string>
+    <string name="setting">Setting Language</string>
+    <string name="detailFilm">Film Details</string>
+    <string name="detailTvShows">TV Shows Details</string>
+    <string name="overview">Overview</string>
+    <string name="pilihbahasa">Language :</string>
+    <string name="simpanbahasa">Change Language Setting</string>
+    <string name="indonesia">Indonesian</string>
+    <string name="english">English</string>
+</resources>

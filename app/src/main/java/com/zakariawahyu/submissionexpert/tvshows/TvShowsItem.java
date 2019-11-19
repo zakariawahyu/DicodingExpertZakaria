@@ -1,14 +1,14 @@
-package com.zakariawahyu.submissionexpert;
+package com.zakariawahyu.submissionexpert.tvshows;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ItemFilm implements Parcelable {
+public class TvShowsItem implements Parcelable {
 
     String judul, tanggal, deskripsi;
     int poster;
 
-    public ItemFilm() {
+    public TvShowsItem() {
         this.judul = judul;
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
@@ -48,35 +48,35 @@ public class ItemFilm implements Parcelable {
     }
 
 
+    protected TvShowsItem(Parcel in) {
+        judul = in.readString();
+        tanggal = in.readString();
+        deskripsi = in.readString();
+        poster = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(judul);
+        dest.writeString(tanggal);
+        dest.writeString(deskripsi);
+        dest.writeInt(poster);
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.judul);
-        dest.writeString(this.tanggal);
-        dest.writeString(this.deskripsi);
-        dest.writeInt(this.poster);
-    }
-
-    protected ItemFilm(Parcel in) {
-        this.judul = in.readString();
-        this.tanggal = in.readString();
-        this.deskripsi = in.readString();
-        this.poster = in.readInt();
-    }
-
-    public static final Parcelable.Creator<ItemFilm> CREATOR = new Parcelable.Creator<ItemFilm>() {
+    public static final Creator<TvShowsItem> CREATOR = new Creator<TvShowsItem>() {
         @Override
-        public ItemFilm createFromParcel(Parcel source) {
-            return new ItemFilm(source);
+        public TvShowsItem createFromParcel(Parcel in) {
+            return new TvShowsItem(in);
         }
 
         @Override
-        public ItemFilm[] newArray(int size) {
-            return new ItemFilm[size];
+        public TvShowsItem[] newArray(int size) {
+            return new TvShowsItem[size];
         }
     };
 }

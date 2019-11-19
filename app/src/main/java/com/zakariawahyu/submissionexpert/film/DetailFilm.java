@@ -1,18 +1,17 @@
-package com.zakariawahyu.submissionexpert;
+package com.zakariawahyu.submissionexpert.film;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.zakariawahyu.submissionexpert.R;
 
 public class DetailFilm extends AppCompatActivity {
 
-    TextView judul, tanggal, deskripsi;
-    ImageView poster;
+    private TextView judul, tanggal, deskripsi;
+    private ImageView poster;
 
 
     @Override
@@ -20,10 +19,10 @@ public class DetailFilm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_film);
 
-        judul = findViewById(R.id.tvJudul);
-        tanggal = findViewById(R.id.tvTanggal);
-        deskripsi = findViewById(R.id.tvDeskripsi);
-        poster = findViewById(R.id.tvPoster);
+        judul = findViewById(R.id.tvJudulFilm);
+        tanggal = findViewById(R.id.tvTanggalFilm);
+        deskripsi = findViewById(R.id.tvDeskripsiFilm);
+        poster = findViewById(R.id.tvPosterFilm);
 
         ItemFilm item = getIntent().getParcelableExtra("Film");
         String judulFilm = item.getJudul();

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".film.DetailFilm">
+    tools:context=".tvshows.TvShowsDetail">
 
     <ImageView
-        android:id="@+id/tvPosterFilm"
+        android:id="@+id/tvPosterTvShows"
         android:layout_width="80dp"
         android:layout_height="130dp"
         android:layout_marginStart="15dp"
@@ -18,8 +18,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/tvJudulFilm"
+        android:id="@+id/tvJudulTvShows"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -29,11 +30,11 @@
         android:textColor="#2E3691"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tvPosterFilm"
+        app:layout_constraintStart_toEndOf="@+id/tvPosterTvShows"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvTanggalFilm"
+        android:id="@+id/tvTanggalTvShows"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -41,35 +42,34 @@
         android:text="April 15, 2018"
         android:textColor="#2E3691"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/tvPosterFilm"
-        app:layout_constraintTop_toBottomOf="@+id/tvJudulFilm" />
-
+        app:layout_constraintStart_toEndOf="@+id/tvPosterTvShows"
+        app:layout_constraintTop_toBottomOf="@+id/tvJudulTvShows" />
 
     <TextView
         android:id="@+id/tvOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
         android:text="@string/overview"
         android:textColor="#9A9A9A"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPosterFilm" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPosterTvShows"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvDeskripsiFilm"
+        android:id="@+id/tvDeskripsiTvShows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:lineSpacingExtra="4dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:lineSpacingExtra="4dp"
         android:text="As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy…"
         android:textColor="#9A9A9A"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/tvOverview"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="71dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
