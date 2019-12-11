@@ -4,20 +4,20 @@ package com.zakariawahyu.submissionexpert.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.zakariawahyu.submissionexpert.R;
-import com.zakariawahyu.submissionexpert.film.AdapterFilm;
-import com.zakariawahyu.submissionexpert.film.DataFilm;
-import com.zakariawahyu.submissionexpert.film.ItemFilm;
 import com.zakariawahyu.submissionexpert.tvshows.AdapterTvShows;
-import com.zakariawahyu.submissionexpert.tvshows.TvShowsData;
 import com.zakariawahyu.submissionexpert.tvshows.TvShowsItem;
+import com.zakariawahyu.submissionexpert.tvshows.TvShowsViewModel;
 
 import java.util.ArrayList;
 
@@ -29,6 +29,10 @@ public class TvShowFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ArrayList<TvShowsItem> list = new ArrayList<>();
+    private ProgressBar progressBar;
+    private AdapterTvShows adapter;
+
+    private TvShowsViewModel tvShowsViewModel;
 
     public TvShowFragment() {
         // Required empty public constructor
@@ -42,15 +46,38 @@ public class TvShowFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tv_show, container, false);
 
         recyclerView = view.findViewById(R.id.rcTvShow);
-        list.addAll(TvShowsData.getList());
+        progressBar = view.findViewById(R.id.progressBar);
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
 
-        AdapterTvShows adapter = new AdapterTvShows(getActivity(), list);
+        adapter = new AdapterTvShows(getActivity(), list);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         recyclerView.setLayoutManager(lm);
+
+        tvShowsViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(TvShowsViewModel.class);
+
+        tvShowsViewModel.setTvShowsdata();
+        showLoading(true);
+
+        tvShowsViewModel.getTvShowsData().observe(this, new Observer<ArrayList<TvShowsItem>>() {
+            @Override
+            public void onChanged(ArrayList<TvShowsItem> itemTvShows) {
+                if (itemTvShows != null) {
+                    adapter.setData(itemTvShows);
+                    showLoading(false);
+                }
+            }
+        });
 
         return view;
     }
 
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zakariawahyu.submissionexpert.R;
-import com.zakariawahyu.submissionexpert.film.ItemFilm;
 
 public class TvShowsDetail extends AppCompatActivity {
 
@@ -28,11 +28,13 @@ public class TvShowsDetail extends AppCompatActivity {
         String judulTvShows = item.getJudul();
         String tanggalTvShows = item.getTanggal();
         String deskripsiTvShows = item.getDeskripsi();
-        int posterTvShows = item.getPoster();
+        String posterTvShows = item.getPoster();
 
         judul.setText(judulTvShows);
         tanggal.setText(tanggalTvShows);
         deskripsi.setText(deskripsiTvShows);
-        poster.setImageResource(posterTvShows);
+
+        String urlPoster = "https://image.tmdb.org/t/p/w185" + posterTvShows;
+        Picasso.get().load(urlPoster).into(poster);
     }
 }

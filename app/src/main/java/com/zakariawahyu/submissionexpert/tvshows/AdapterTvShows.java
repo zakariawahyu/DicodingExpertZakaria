@@ -11,18 +11,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.zakariawahyu.submissionexpert.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsViewHolder> {
 
     Context mContext;
-    List<TvShowsItem> mData;
+    private ArrayList<TvShowsItem> mData = new ArrayList<>();
 
-    public AdapterTvShows(Context mContext, List<TvShowsItem> mData) {
+    public AdapterTvShows(Context mContext, ArrayList<TvShowsItem> mData) {
         this.mContext = mContext;
         this.mData = mData;
+    }
+
+    public void setData(ArrayList<TvShowsItem> items){
+        mData.clear();
+        mData.addAll(items);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,10 +42,7 @@ public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsV
 
     @Override
     public void onBindViewHolder(@NonNull TvShowsViewHolder holder, final int position) {
-        holder.judul.setText(mData.get(position).getJudul());
-        holder.tanggal.setText(mData.get(position).getTanggal());
-        holder.deskripsi.setText(mData.get(position).getDeskripsi());
-        holder.poster.setImageResource(mData.get(position).getPoster());
+        holder.bind(mData.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +70,14 @@ public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsV
             tanggal = itemView.findViewById(R.id.tvitemTanggalTvShows);
             deskripsi = itemView.findViewById(R.id.tvitemDeskripsiTvShows);
             poster = itemView.findViewById(R.id.tvitemPosterTvShows);
+        }
+
+        void bind(TvShowsItem tvShowsItem){
+            final String urlPoster = "https://image.tmdb.org/t/p/w185" + tvShowsItem.getPoster();
+            Picasso.get().load(urlPoster).into(poster);
+            judul.setText(tvShowsItem.getJudul());
+            tanggal.setText(tvShowsItem.getTanggal());
+            deskripsi.setText(tvShowsItem.getDeskripsi());
         }
     }
 }

@@ -5,8 +5,7 @@ import android.os.Parcelable;
 
 public class ItemFilm implements Parcelable {
 
-    String judul, tanggal, deskripsi;
-    int poster;
+    String judul, tanggal, deskripsi, poster;
 
     public ItemFilm() {
         this.judul = judul;
@@ -39,11 +38,11 @@ public class ItemFilm implements Parcelable {
         this.deskripsi = deskripsi;
     }
 
-    public int getPoster() {
+    public String getPoster() {
         return poster;
     }
 
-    public void setPoster(int poster) {
+    public void setPoster(String poster) {
         this.poster = poster;
     }
 
@@ -58,14 +57,14 @@ public class ItemFilm implements Parcelable {
         dest.writeString(this.judul);
         dest.writeString(this.tanggal);
         dest.writeString(this.deskripsi);
-        dest.writeInt(this.poster);
+        dest.writeString(this.poster);
     }
 
     protected ItemFilm(Parcel in) {
         this.judul = in.readString();
         this.tanggal = in.readString();
         this.deskripsi = in.readString();
-        this.poster = in.readInt();
+        this.poster = in.readString();
     }
 
     public static final Parcelable.Creator<ItemFilm> CREATOR = new Parcelable.Creator<ItemFilm>() {

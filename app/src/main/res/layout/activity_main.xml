@@ -14,7 +14,8 @@
         android:background="@color/colorPrimary"
         app:tabTextColor="@android:color/white"
         app:tabGravity="fill"
-        app:tabMode="fixed"/>
+        app:tabMode="fixed"
+        app:tabMaxWidth="0dp"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

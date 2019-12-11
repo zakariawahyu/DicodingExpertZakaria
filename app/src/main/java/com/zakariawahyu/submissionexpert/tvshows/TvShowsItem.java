@@ -5,8 +5,7 @@ import android.os.Parcelable;
 
 public class TvShowsItem implements Parcelable {
 
-    String judul, tanggal, deskripsi;
-    int poster;
+    String judul, tanggal, deskripsi,poster;
 
     public TvShowsItem() {
         this.judul = judul;
@@ -39,11 +38,11 @@ public class TvShowsItem implements Parcelable {
         this.deskripsi = deskripsi;
     }
 
-    public int getPoster() {
+    public String getPoster() {
         return poster;
     }
 
-    public void setPoster(int poster) {
+    public void setPoster(String poster) {
         this.poster = poster;
     }
 
@@ -52,7 +51,7 @@ public class TvShowsItem implements Parcelable {
         judul = in.readString();
         tanggal = in.readString();
         deskripsi = in.readString();
-        poster = in.readInt();
+        poster = in.readString();
     }
 
     @Override
@@ -60,7 +59,7 @@ public class TvShowsItem implements Parcelable {
         dest.writeString(judul);
         dest.writeString(tanggal);
         dest.writeString(deskripsi);
-        dest.writeInt(poster);
+        dest.writeString(poster);
     }
 
     @Override
