@@ -5,13 +5,23 @@ import android.os.Parcelable;
 
 public class ItemFilm implements Parcelable {
 
+    int id;
     String judul, tanggal, deskripsi, poster;
 
     public ItemFilm() {
+        this.id = id;
         this.judul = judul;
         this.tanggal = tanggal;
         this.deskripsi = deskripsi;
         this.poster = poster;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getJudul() {
@@ -54,6 +64,7 @@ public class ItemFilm implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.judul);
         dest.writeString(this.tanggal);
         dest.writeString(this.deskripsi);
@@ -61,6 +72,7 @@ public class ItemFilm implements Parcelable {
     }
 
     protected ItemFilm(Parcel in) {
+        this.id = in.readInt();
         this.judul = in.readString();
         this.tanggal = in.readString();
         this.deskripsi = in.readString();

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.zakariawahyu.submissionexpert.film.AdapterFilm;
 import com.zakariawahyu.submissionexpert.film.FilmViewModel;
@@ -48,7 +49,6 @@ public class FilmFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcFilm);
         progressBar = view.findViewById(R.id.progressBar);
 
-
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
 
         adapter = new AdapterFilm(getActivity(), list);
@@ -69,6 +69,8 @@ public class FilmFragment extends Fragment {
                 if (itemFilms != null) {
                     adapter.setData(itemFilms);
                     showLoading(false);
+                } else {
+                    Toast.makeText(getActivity(), "No data", Toast.LENGTH_SHORT).show();
                 }
             }
         });

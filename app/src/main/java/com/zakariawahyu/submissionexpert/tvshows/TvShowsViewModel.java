@@ -36,12 +36,13 @@ public class TvShowsViewModel extends ViewModel {
                     JSONArray list = responseObject.getJSONArray("results");
 
                     for (int i = 0; i < list.length(); i++) {
-                        JSONObject film = list.getJSONObject(i);
+                        JSONObject tvshows = list.getJSONObject(i);
                         TvShowsItem itemTvShows = new TvShowsItem();
-                        itemTvShows.setJudul(film.getString("name"));
-                        itemTvShows.setTanggal(film.getString("first_air_date"));
-                        itemTvShows.setDeskripsi(film.getString("overview"));
-                        itemTvShows.setPoster(film.getString("backdrop_path"));
+                        itemTvShows.setId(tvshows.getInt("id"));
+                        itemTvShows.setJudul(tvshows.getString("name"));
+                        itemTvShows.setTanggal(tvshows.getString("first_air_date"));
+                        itemTvShows.setDeskripsi(tvshows.getString("overview"));
+                        itemTvShows.setPoster(tvshows.getString("backdrop_path"));
                         listItems.add(itemTvShows);
                     }
                     listTvShows.postValue(listItems);

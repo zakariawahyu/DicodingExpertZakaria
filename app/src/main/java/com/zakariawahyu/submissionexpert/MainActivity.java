@@ -1,8 +1,14 @@
 package com.zakariawahyu.submissionexpert;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -23,7 +29,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.zakariawahyu.submissionexpert.fragment.FavoriteFragment;
 import com.zakariawahyu.submissionexpert.fragment.FilmFragment;
 import com.zakariawahyu.submissionexpert.fragment.TvShowFragment;
 import com.zakariawahyu.submissionexpert.fragment.ViewPagerAdapter;
@@ -33,47 +41,28 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
+    private BottomNavigationView bottomNavigationView;
+    private Fragment fragment = new FilmFragment();
+
+    public static final String KEY_FRAGMENT = "fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tabLayout = findViewById(R.id.tabs);
-        viewPager = findViewById(R.id.view_pager);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        adapter.AddFragment(new FilmFragment(),getString(R.string.film));
-        adapter.AddFragment(new TvShowFragment(),getString(R.string.tvshows));
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_film, R.id.navigation_tvshow, R.id.navigation_favorit)
+                .build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_local_movies_black_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_live_tv_black_24dp);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
-        switch (item.getItemId()) {
-            case R.id.setting:
-                i = new Intent(MainActivity.this, Setting.class);
-                startActivity(i);
-                return true;
-        }
-        return true;
-    }
+
 }

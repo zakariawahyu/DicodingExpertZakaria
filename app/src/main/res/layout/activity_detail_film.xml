@@ -14,7 +14,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:scaleType="fitXY"
-        android:src="@drawable/poster_avengerinfinity"
+        android:src="@mipmap/ic_launcher_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="28dp"
-        android:text="Avengers: Infinity War"
+        tools:text="Avengers: Infinity War"
         android:textColor="#2E3691"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:text="April 15, 2018"
+        tools:text="April 15, 2018"
         android:textColor="#2E3691"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvPosterFilm"
@@ -52,7 +52,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
-        android:text="@string/overview"
+        tools:text="@string/overview"
         android:textColor="#9A9A9A"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,10 +66,23 @@
         android:lineSpacingExtra="4dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:text="As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy…"
+        tools:text="As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy…"
         android:textColor="#9A9A9A"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/tvOverview"
         tools:layout_editor_absoluteX="0dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarFilm"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="208dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

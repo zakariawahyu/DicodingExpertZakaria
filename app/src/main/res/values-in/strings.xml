@@ -3,6 +3,7 @@
     <string name="app_name">Submission Expert</string>
     <string name="tvshows">Serial TV</string>
     <string name="film">Film</string>
+    <string name="fav">Favorit</string>
     <string name="setting">Pengaturan Bahasa</string>
     <string name="detailFilm">Detail Film</string>
     <string name="detailTvShows">Detail TV Shows</string>
@@ -11,4 +12,9 @@
     <string name="simpanbahasa">Ubah Pengaturan Bahasa</string>
     <string name="indonesia">Indonesia</string>
     <string name="english">English</string>
+
+    <string-array name="title_tab">
+        <item>Film</item>
+        <item>Serial Tv</item>
+    </string-array>
 </resources>
