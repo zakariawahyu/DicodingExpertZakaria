@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Setting">
+    tools:context=".SettingLanguage">
 
     <TextView
         android:id="@+id/tvPilihBahasa"
@@ -13,7 +13,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
-        tools:text="@string/pilihbahasa"/>
+        android:text="@string/pilihbahasa"/>
 
 
     <RadioGroup
@@ -32,13 +32,13 @@
             android:id="@+id/radioButtonId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/indonesia" />
+            android:text="@string/indonesia" />
 
         <RadioButton
             android:id="@+id/radioButtonEng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/english" />
+            android:text="@string/english" />
 
     </RadioGroup>
 
@@ -50,7 +50,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        tools:text="@string/simpanbahasa"/>
+        android:text="@string/simpanbahasa"/>
 
 
 </RelativeLayout>

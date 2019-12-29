@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-50dp" />
+        tools:layout_editor_absoluteY="-50dp"
+        tools:listitem="@layout/item_film"/>
 
     <ProgressBar
         android:id="@+id/progressBarFilmFav"
@@ -24,7 +25,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rcFilm" />
+        app:layout_constraintTop_toTopOf="@+id/rcFavFilm" />
+
+    <TextView
+        android:id="@+id/tv_data_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/empty_favorites"
+        tools:visibility="gone" />
 
 
 </FrameLayout>

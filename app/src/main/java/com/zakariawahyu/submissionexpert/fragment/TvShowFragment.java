@@ -1,6 +1,7 @@
 package com.zakariawahyu.submissionexpert.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,16 +11,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.zakariawahyu.submissionexpert.R;
+import com.zakariawahyu.submissionexpert.ReminderSetting;
+import com.zakariawahyu.submissionexpert.search.Search;
+import com.zakariawahyu.submissionexpert.SettingLanguage;
 import com.zakariawahyu.submissionexpert.tvshows.AdapterTvShows;
 import com.zakariawahyu.submissionexpert.tvshows.TvShowsItem;
 import com.zakariawahyu.submissionexpert.tvshows.TvShowsViewModel;
 
 import java.util.ArrayList;
+
+import static com.zakariawahyu.submissionexpert.search.Search.EXTRA_TYPE;
 
 
 /**
@@ -70,6 +79,8 @@ public class TvShowFragment extends Fragment {
             }
         });
 
+        setHasOptionsMenu(true);
+
         return view;
     }
 
@@ -79,5 +90,31 @@ public class TvShowFragment extends Fragment {
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_item, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
+        switch (item.getItemId()) {
+            case R.id.action_setting_bahasa:
+                i = new Intent(getActivity(), SettingLanguage.class);
+                startActivity(i);
+                break;
+            case R.id.action_search:
+                Intent intent = new Intent(getActivity(), Search.class);
+                intent.putExtra(EXTRA_TYPE, getString(R.string.tvshows));
+                startActivity(intent);
+                break;
+            case R.id.action_setting_prefpengguna:
+                i = new Intent(getActivity(), ReminderSetting.class);
+                startActivity(i);
+                break;
+        }
+        return true;
     }
 }

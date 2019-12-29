@@ -12,7 +12,22 @@
     <string name="simpanbahasa">Ubah Pengaturan Bahasa</string>
     <string name="indonesia">Indonesia</string>
     <string name="english">English</string>
-
+    <string name="empty_favorites">Tidak ada favorit di database</string>
+    <string name="removed_from_favorites">Dihapus dari daftar favorit</string>
+    <string name="gagal_remove">Gagal dihapus dari daftar favorit</string>
+    <string name="added_to_favorites">Ditambahkan ke daftar favorit</string>
+    <string name="gagal_insert_fav">Gagal ditambahkan ke daftar favorit</string>
+    <string name="no_items_match">Data tidak ditemukan</string>
+    <string name="search">Cari</string>
+    <string name="user_preference">Pengaturan Pengingat</string>
+    <string name="daily_reminder">Pengingat harian</string>
+    <string name="daily_reminder_description">Ini akan mengingatkan anda untuk kembali ke Katalog Film setiap jam 7 pagi</string>
+    <string name="release_today_reminder">Pengingat Film Rilis Hari ini</string>
+    <string name="release_today_reminder_description">Ini akan mengingatkan anda film apa yang rilis hari ini setiap jam 8 pagi</string>
+    <string name="daily_notif_message">Jangan lupa kembali hari ini!</string>
+    <string name="has_been_release">%s dirilis hari ini!</string>
+    <string name="alarm_turned_on">%s dinyalakan</string>
+    <string name="alarm_turned_off">%s dimatikan</string>
     <string-array name="title_tab">
         <item>Film</item>
         <item>Serial TV</item>

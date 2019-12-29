@@ -37,12 +37,7 @@ public class FilmViewModel extends ViewModel {
 
                     for (int i = 0; i < list.length(); i++) {
                         JSONObject film = list.getJSONObject(i);
-                        ItemFilm itemFilm = new ItemFilm();
-                        itemFilm.setId(film.getInt("id"));
-                        itemFilm.setJudul(film.getString("title"));
-                        itemFilm.setTanggal(film.getString("release_date"));
-                        itemFilm.setDeskripsi(film.getString("overview"));
-                        itemFilm.setPoster(film.getString("poster_path"));
+                        ItemFilm itemFilm = new ItemFilm(film);
                         listItems.add(itemFilm);
                     }
                     listFilm.postValue(listItems);

@@ -45,36 +45,6 @@ public class FilmHelper {
             db.close();
     }
 
-    public ArrayList<ItemFilm> getAllFilmFav() {
-        ArrayList<ItemFilm> filmArrayList = new ArrayList<>();
-        Cursor cursor = db.query(DataContract.FilmFavEntry.TABLE_FILM,
-                null,
-                null,
-                null,
-                null,
-                null,
-                _ID + " ASC",
-                null);
-        cursor.moveToFirst();
-
-
-        if (cursor.getCount() > 0) {
-            do {
-                ItemFilm itemFilm = new ItemFilm();
-                itemFilm.setId(cursor.getInt(cursor.getColumnIndex(_ID)));
-                itemFilm.setJudul(cursor.getString(cursor.getColumnIndex(DataContract.FilmFavEntry.COL_JUDUL)));
-                itemFilm.setTanggal(cursor.getString(cursor.getColumnIndex(DataContract.FilmFavEntry.COL_TANGGAL)));
-                itemFilm.setDeskripsi(cursor.getString(cursor.getColumnIndex(DataContract.FilmFavEntry.COL_DEKSRIPSI)));
-                itemFilm.setPoster(cursor.getString(cursor.getColumnIndex(DataContract.FilmFavEntry.COL_POSTER)));
-
-                filmArrayList.add(itemFilm);
-                cursor.moveToNext();
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return filmArrayList;
-    }
-
     public boolean isFilmFav(int filmId) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -93,18 +63,32 @@ public class FilmHelper {
         return isFavorite;
     }
 
-    public void addFilmFav(ItemFilm itemFilm) {
-        ContentValues values = new ContentValues();
-        values.put(DataContract.FilmFavEntry._ID, itemFilm.getId());
-        values.put(DataContract.FilmFavEntry.COL_JUDUL, itemFilm.getJudul());
-        values.put(DataContract.FilmFavEntry.COL_TANGGAL, itemFilm.getTanggal());
-        values.put(DataContract.FilmFavEntry.COL_DEKSRIPSI, itemFilm.getDeskripsi());
-        values.put(DataContract.FilmFavEntry.COL_POSTER, itemFilm.getPoster());
-
-        db.insert(DataContract.FilmFavEntry.TABLE_FILM, null, values);
+    public Cursor queryByIdProviderFilm(String id) {
+        return db.query(DataContract.FilmFavEntry.TABLE_FILM, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
     }
 
-    public void deleteFilmFav(int filmId){
-        db.delete(DataContract.FilmFavEntry.TABLE_FILM, _ID + " = '" + filmId + "'", null);
+    public Cursor queryProviderFilm() {
+        return db.query(DataContract.FilmFavEntry.TABLE_FILM
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
     }
+
+    public long insertProviderFilm(ContentValues values) {
+        return db.insert(DataContract.FilmFavEntry.TABLE_FILM, null, values);
+    }
+
+    public int deleteProviderFilm(String id) {
+        return db.delete(DataContract.FilmFavEntry.TABLE_FILM, _ID + " = ?", new String[]{id});
+    }
+
 }

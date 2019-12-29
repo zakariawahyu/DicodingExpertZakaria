@@ -37,12 +37,7 @@ public class TvShowsViewModel extends ViewModel {
 
                     for (int i = 0; i < list.length(); i++) {
                         JSONObject tvshows = list.getJSONObject(i);
-                        TvShowsItem itemTvShows = new TvShowsItem();
-                        itemTvShows.setId(tvshows.getInt("id"));
-                        itemTvShows.setJudul(tvshows.getString("name"));
-                        itemTvShows.setTanggal(tvshows.getString("first_air_date"));
-                        itemTvShows.setDeskripsi(tvshows.getString("overview"));
-                        itemTvShows.setPoster(tvshows.getString("backdrop_path"));
+                        TvShowsItem itemTvShows = new TvShowsItem(tvshows);
                         listItems.add(itemTvShows);
                     }
                     listTvShows.postValue(listItems);

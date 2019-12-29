@@ -1,6 +1,9 @@
 package com.zakariawahyu.submissionexpert.fragment;
 
 
+import android.content.Context;
+import android.database.ContentObserver;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -9,11 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.zakariawahyu.submissionexpert.R;
 import com.zakariawahyu.submissionexpert.data.DataHelper;
@@ -25,6 +31,10 @@ import com.zakariawahyu.submissionexpert.film.LoadFilmCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static com.zakariawahyu.submissionexpert.data.DataContract.FilmFavEntry.CONTENT_URI;
+import static com.zakariawahyu.submissionexpert.helper.MappingHelper.mapCursorFilmToArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,13 +46,13 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
     private ProgressBar progressBar;
     private AdapterFilmFav adapter;
     private FilmHelper filmHelper;
+    private TextView emptyData;
 
     private static final String TAG = FilmFavFragment.class.getSimpleName();
     private static final String EXTRA_STATE = "EXTRA_STATE";
 
 
     public FilmFavFragment() {
-        // Required empty public constructor
     }
 
 
@@ -54,6 +64,8 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
 
         recyclerView = view.findViewById(R.id.rcFavFilm);
         progressBar = view.findViewById(R.id.progressBarFilmFav);
+        emptyData = view.findViewById(R.id.tv_data_empty);
+        emptyData.setText(getString(R.string.empty_favorites));
 
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(lm);
@@ -67,8 +79,15 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        HandlerThread handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+
+        DataObserver observer = new DataObserver(handler, getContext());
+        Objects.requireNonNull(getActivity()).getContentResolver().registerContentObserver(CONTENT_URI, true, observer);
+
         if (savedInstanceState == null) {
-            new LoadFilmAsync(filmHelper, this).execute();
+            new LoadFilmAsync(getContext(), this).execute();
         } else {
             ArrayList<ItemFilm> list = savedInstanceState.getParcelableArrayList(EXTRA_STATE);
             if (list != null) {
@@ -84,22 +103,35 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
             @Override
             public void run() {
                 progressBar.setVisibility(View.VISIBLE);
-                Log.d(TAG, "run: PreExecute");
+                emptyData.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void postExecute(ArrayList<ItemFilm> itemFilms) {
+    public void postExecute(Cursor cursor) {
         progressBar.setVisibility(View.GONE);
-        if (itemFilms.size() != 0) {
-            adapter.setListFilm(itemFilms);
-            progressBar.setVisibility(View.GONE);
-            Log.d(TAG, "postExecute: ");
+        ArrayList<ItemFilm> itemFilms = mapCursorFilmToArrayList(cursor);
+
+        if (itemFilms != null) {
+            if (itemFilms.size() != 0) {
+                adapter.setListFilm(itemFilms);
+                progressBar.setVisibility(View.GONE);
+                emptyData.setVisibility(View.GONE);
+                Log.d(TAG, "postExecute: Ada data");
+            } else {
+                emptyData.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                adapter.setListFilm(new ArrayList<ItemFilm>());
+                Log.d(TAG, "postExecute: Data null");
+            }
         } else {
             progressBar.setVisibility(View.GONE);
-            Log.d(TAG, "postExecute: data null");
+            emptyData.setVisibility(View.VISIBLE);
+            adapter.setListFilm(new ArrayList<ItemFilm>());
+            Log.d(TAG, "postExecute: Data null");
         }
+        Log.d(TAG, "postExecute");
     }
 
     @Override
@@ -114,13 +146,13 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getListData());
     }
 
-    private static class LoadFilmAsync extends AsyncTask<Void, Void, ArrayList<ItemFilm>> {
+    private static class LoadFilmAsync extends AsyncTask<Void, Void, Cursor> {
 
-        private final WeakReference<FilmHelper> weakDataHelper;
+        private final WeakReference<Context> weakContext;
         private final WeakReference<LoadFilmCallback> weakCallback;
 
-        private LoadFilmAsync(FilmHelper dataHelper, LoadFilmCallback callback) {
-            weakDataHelper = new WeakReference<>(dataHelper);
+        private LoadFilmAsync(Context context, LoadFilmCallback callback) {
+            weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
 
@@ -132,16 +164,30 @@ public class FilmFavFragment extends Fragment implements LoadFilmCallback {
         }
 
         @Override
-        protected ArrayList<ItemFilm> doInBackground(Void... voids) {
+        protected Cursor doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground: ");
-            return weakDataHelper.get().getAllFilmFav();
+            return weakContext.get().getContentResolver().query(CONTENT_URI,null,null,null,null);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ItemFilm> itemFilms) {
-            super.onPostExecute(itemFilms);
-            weakCallback.get().postExecute(itemFilms);
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            weakCallback.get().postExecute(cursor);
             Log.d(TAG, "onPostExecute: ");
+        }
+    }
+
+    public static class DataObserver extends ContentObserver {
+        final Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
         }
     }
 

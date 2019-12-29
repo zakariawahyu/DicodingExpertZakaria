@@ -1,8 +1,9 @@
 package com.zakariawahyu.submissionexpert.film;
 
-import java.util.ArrayList;
+import android.database.Cursor;
+
 
 public interface LoadFilmCallback {
     void preExecute();
-    void postExecute(ArrayList<ItemFilm> itemFilms);
+    void postExecute(Cursor cursor);
 }

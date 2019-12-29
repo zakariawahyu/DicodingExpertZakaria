@@ -2,8 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_settings_black_24dp"
-        app:showAsAction="always"
-        android:title="" />
+        android:id="@+id/action_search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_setting_bahasa"
+        android:title="@string/setting"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_setting_prefpengguna"
+        android:title="@string/user_preference"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="never"/>
 </menu>

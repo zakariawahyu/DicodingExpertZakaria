@@ -2,6 +2,7 @@ package com.zakariawahyu.submissionexpert.tvshows;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.zakariawahyu.submissionexpert.R;
+import com.zakariawahyu.submissionexpert.data.DataContract;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,11 @@ public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsV
         notifyDataSetChanged();
     }
 
+    public void clearItems() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public TvShowsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +55,8 @@ public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsV
             public void onClick(View v) {
                 TvShowsItem tvShowsItem = mData.get(position);
                 Intent intent = new Intent(mContext, TvShowsDetail.class);
+                Uri uriId = Uri.parse(DataContract.TvShowsFavEntry.CONTENT_URI + "/"+ mData.get(position).getId());
+                intent.setData(uriId);
                 intent.putExtra("TvShows",tvShowsItem );
                 mContext.startActivity(intent);
             }
@@ -73,7 +82,7 @@ public class AdapterTvShows extends RecyclerView.Adapter<AdapterTvShows.TvShowsV
         }
 
         void bind(TvShowsItem tvShowsItem){
-            final String urlPoster = "https://image.tmdb.org/t/p/w185" + tvShowsItem.getPoster();
+            final String urlPoster = "https://image.tmdb.org/t/p/w342" + tvShowsItem.getPoster();
             Picasso.get().load(urlPoster).into(poster);
             judul.setText(tvShowsItem.getJudul());
             tanggal.setText(tvShowsItem.getTanggal());

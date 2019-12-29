@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':favkatalogfilm'
 rootProject.name='Submission Expert'

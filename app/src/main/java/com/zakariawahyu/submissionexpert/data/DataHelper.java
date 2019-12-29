@@ -1,19 +1,9 @@
 package com.zakariawahyu.submissionexpert.data;
 
-import android.content.ContentValues;
+
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-
-import com.zakariawahyu.submissionexpert.film.ItemFilm;
-import com.zakariawahyu.submissionexpert.tvshows.TvShowsItem;
-
-import java.util.ArrayList;
-
-
-import static android.provider.BaseColumns._ID;
 
 public class DataHelper extends SQLiteOpenHelper {
 

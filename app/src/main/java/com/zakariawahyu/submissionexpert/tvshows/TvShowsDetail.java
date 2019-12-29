@@ -3,6 +3,10 @@ package com.zakariawahyu.submissionexpert.tvshows;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,10 +15,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.zakariawahyu.submissionexpert.R;
+import com.zakariawahyu.submissionexpert.data.DataContract;
 import com.zakariawahyu.submissionexpert.data.TvShowsHelper;
+import com.zakariawahyu.submissionexpert.widget.WidgetFavorit;
+
+
+import static android.provider.BaseColumns._ID;
 
 public class TvShowsDetail extends AppCompatActivity {
 
@@ -26,6 +36,7 @@ public class TvShowsDetail extends AppCompatActivity {
     private TvShowsHelper dataHelper;
     private TvShowsItem tvShowsItem;
     private ProgressBar progressBar;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,20 @@ public class TvShowsDetail extends AppCompatActivity {
 
         dataHelper = TvShowsHelper.getInstance(getApplicationContext());
 
+        uri = getIntent().getData();
+        if (uri != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            Log.d("id: ", "Id: " + getIntent().getData());
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    if (tvShowsItem != null) {
+                        tvShowsItem = new TvShowsItem(cursor);
+                    }
+                }
+                cursor.close();
+            }
+        }
+
         tvShowsItem = getIntent().getParcelableExtra("TvShows");
         String judulTvShows = tvShowsItem.getJudul();
         String tanggalTvShows = tvShowsItem.getTanggal();
@@ -50,7 +75,7 @@ public class TvShowsDetail extends AppCompatActivity {
         tanggal.setText(tanggalTvShows);
         deskripsi.setText(deskripsiTvShows);
 
-        String urlPoster = "https://image.tmdb.org/t/p/w185" + posterTvShows;
+        String urlPoster = "https://image.tmdb.org/t/p/w342" + posterTvShows;
         Picasso.get().load(urlPoster).into(poster);
         showLoading(true);
     }
@@ -70,15 +95,17 @@ public class TvShowsDetail extends AppCompatActivity {
                 dataHelper.open();
                 if (isFav) {
                     isFav = false;
-                    dataHelper.deleteTvShowsFav(tvShowsItem.getId());
+                    deleteTvShows();
                     setFavorite();
                 } else {
                     isFav = true;
-                    dataHelper.addTvShowsFav(tvShowsItem);
+                    saveTvShows();
                     setFavorite();
                 }
+                updateWidgetTvShowsFavorite();
                 dataHelper.close();
             }
+            updateWidgetTvShowsFavorite();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -110,4 +137,38 @@ public class TvShowsDetail extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
+    private void saveTvShows(){
+        dataHelper.open();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(_ID, tvShowsItem.getId());
+        contentValues.put(DataContract.FilmFavEntry.COL_JUDUL, tvShowsItem.getJudul());
+        contentValues.put(DataContract.FilmFavEntry.COL_TANGGAL, tvShowsItem.getTanggal());
+        contentValues.put(DataContract.FilmFavEntry.COL_DEKSRIPSI, tvShowsItem.getDeskripsi());
+        contentValues.put(DataContract.FilmFavEntry.COL_POSTER, tvShowsItem.getPoster());
+        Uri insert = getContentResolver().insert(DataContract.TvShowsFavEntry.CONTENT_URI, contentValues);
+
+        if (insert != null) {
+            Toast.makeText(TvShowsDetail.this, R.string.added_to_favorites, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(TvShowsDetail.this, R.string.gagal_insert_fav, Toast.LENGTH_SHORT).show();
+        }
+        dataHelper.close();
+    }
+
+    private void deleteTvShows() {
+        int delete = getContentResolver().delete(uri, null, null);
+
+        if (delete == 0){
+            Toast.makeText(TvShowsDetail.this, R.string.gagal_remove, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(TvShowsDetail.this, R.string.removed_from_favorites, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateWidgetTvShowsFavorite() {
+        Intent updateWidget = new Intent(this, WidgetFavorit.class);
+        updateWidget.setAction(WidgetFavorit.UPDATE_WIDGET);
+        sendBroadcast(updateWidget);
+    }
+
 }

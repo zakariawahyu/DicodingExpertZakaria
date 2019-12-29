@@ -1,19 +1,47 @@
 package com.zakariawahyu.submissionexpert.tvshows;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.zakariawahyu.submissionexpert.data.DataContract;
+
+import org.json.JSONObject;
+
+import static android.provider.BaseColumns._ID;
+import static com.zakariawahyu.submissionexpert.data.DataContract.getColumnInt;
+import static com.zakariawahyu.submissionexpert.data.DataContract.getColumnString;
 
 public class TvShowsItem implements Parcelable {
 
     int id;
     String judul, tanggal, deskripsi,poster;
 
-    public TvShowsItem() {
-        this.id = id;
-        this.judul = judul;
-        this.tanggal = tanggal;
-        this.deskripsi = deskripsi;
-        this.poster = poster;
+    public TvShowsItem(JSONObject currentTvShows) {
+        try {
+            int id = currentTvShows.getInt("id");
+            String judul = currentTvShows.getString("name");
+            String tanggal = currentTvShows.getString("first_air_date");
+            String description = currentTvShows.getString("overview");
+            String posterPath = currentTvShows.getString("poster_path");
+
+            this.id = id;
+            this.judul = judul;
+            this.tanggal = tanggal;
+            this.deskripsi = description;
+            this.poster = posterPath;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public TvShowsItem(Cursor cursor) {
+        this.id = getColumnInt(cursor, _ID);
+        this.judul = getColumnString(cursor, DataContract.TvShowsFavEntry.COL_JUDUL);
+        this.tanggal = getColumnString(cursor, DataContract.TvShowsFavEntry.COL_TANGGAL);
+        this.deskripsi = getColumnString(cursor, DataContract.TvShowsFavEntry.COL_DEKSRIPSI);
+        this.poster = getColumnString(cursor, DataContract.TvShowsFavEntry.COL_POSTER);
     }
 
     public int getId() {
@@ -72,6 +100,10 @@ public class TvShowsItem implements Parcelable {
         dest.writeString(tanggal);
         dest.writeString(deskripsi);
         dest.writeString(poster);
+    }
+
+    public TvShowsItem(){
+
     }
 
     @Override

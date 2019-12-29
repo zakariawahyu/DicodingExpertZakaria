@@ -12,7 +12,22 @@
     <string name="simpanbahasa">Change Language Setting</string>
     <string name="indonesia">Indonesian</string>
     <string name="english">English</string>
-
+    <string name="empty_favorites">There are no favorites in database</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
+    <string name="gagal_remove">Error remove to favorites</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="gagal_insert_fav">Error added to favorites</string>
+    <string name="no_items_match">No items match your search</string>
+    <string name="search">Search</string>
+    <string name="user_preference">Reminder Setting</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_reminder_description">It will remind you to back to Movie Catalogue every 7 AM</string>
+    <string name="release_today_reminder">Release Today Reminder</string>
+    <string name="release_today_reminder_description">It will remind you what movies are release today every 8 AM</string>
+    <string name="daily_notif_message">Dont forget to back this!</string>
+    <string name="has_been_release">%s has been release today!</string>
+    <string name="alarm_turned_on">%s turned on</string>
+    <string name="alarm_turned_off">%s turned off</string>
     <string-array name="title_tab">
         <item>Film</item>
         <item>TV Shows</item>

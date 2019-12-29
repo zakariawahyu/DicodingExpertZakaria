@@ -45,54 +45,6 @@ public class TvShowsHelper {
             db.close();
     }
 
-    public void addTvShowsFav(TvShowsItem tvShowsItem) {
-        ContentValues values = new ContentValues();
-        values.put(DataContract.FilmFavEntry._ID, tvShowsItem.getId());
-        values.put(DataContract.FilmFavEntry.COL_JUDUL, tvShowsItem.getJudul());
-        values.put(DataContract.FilmFavEntry.COL_TANGGAL, tvShowsItem.getTanggal());
-        values.put(DataContract.FilmFavEntry.COL_DEKSRIPSI, tvShowsItem.getDeskripsi());
-        values.put(DataContract.FilmFavEntry.COL_POSTER, tvShowsItem.getPoster());
-
-        db.insert(DataContract.TvShowsFavEntry.TABLE_TVSHOWS, null, values);
-    }
-
-
-
-    public void deleteTvShowsFav(int tvshowsId){
-        db.delete(DataContract.TvShowsFavEntry.TABLE_TVSHOWS, _ID + " = '" + tvshowsId + "'", null);
-    }
-
-    public ArrayList<TvShowsItem> getAllTvShowsFav() {
-        ArrayList<TvShowsItem> tvShowsItemArrayList = new ArrayList<>();
-        Cursor cursor = db.query(DataContract.TvShowsFavEntry.TABLE_TVSHOWS,
-                null,
-                null,
-                null,
-                null,
-                null,
-                _ID + " ASC",
-                null);
-        cursor.moveToFirst();
-
-
-        if (cursor.getCount() > 0) {
-            do {
-                TvShowsItem tvShowsItem = new TvShowsItem();
-                tvShowsItem.setId(cursor.getInt(cursor.getColumnIndex(_ID)));
-                tvShowsItem.setJudul(cursor.getString(cursor.getColumnIndex(DataContract.TvShowsFavEntry.COL_JUDUL)));
-                tvShowsItem.setTanggal(cursor.getString(cursor.getColumnIndex(DataContract.TvShowsFavEntry.COL_TANGGAL)));
-                tvShowsItem.setDeskripsi(cursor.getString(cursor.getColumnIndex(DataContract.TvShowsFavEntry.COL_DEKSRIPSI)));
-                tvShowsItem.setPoster(cursor.getString(cursor.getColumnIndex(DataContract.TvShowsFavEntry.COL_POSTER)));
-
-                tvShowsItemArrayList.add(tvShowsItem);
-                cursor.moveToNext();
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return tvShowsItemArrayList;
-    }
-
-
     public boolean isTvShowsFav(int tvshowsId) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         boolean isFavorite = false;
@@ -109,4 +61,33 @@ public class TvShowsHelper {
 
         return isFavorite;
     }
+
+    public Cursor queryByIdProviderTvShows(String id) {
+        return db.query(DataContract.TvShowsFavEntry.TABLE_TVSHOWS, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public Cursor queryProviderTvShows() {
+        return db.query(DataContract.TvShowsFavEntry.TABLE_TVSHOWS
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProviderTvShows(ContentValues values) {
+        return db.insert(DataContract.TvShowsFavEntry.TABLE_TVSHOWS, null, values);
+    }
+
+    public int deleteProviderTvShows(String idTvShows) {
+        return db.delete(DataContract.TvShowsFavEntry.TABLE_TVSHOWS, _ID + " = ?", new String[]{idTvShows});
+    }
+
 }
